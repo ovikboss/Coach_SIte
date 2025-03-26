@@ -1,0 +1,49 @@
+{% extends 'Coach_Site/base.html' %}
+
+{% block title %} Информация о тренере {{ coach.user.first_name }} {% endblock %}
+
+{% block content %}
+  <ul class="list-group">
+      <li class="list-group-item">
+        <h5>{{ coach.user.first_name }}</h5>
+        <p> Номер телефона:
+          {% if  coach.hide_phone_number %}
+            Номер скрыт
+          {% else %}
+          {{ coach.user.phone_number|truncatewords:7}}</p>
+        {% endif %}
+        <p>Рейтинг: {{ coach.rating}}</p>
+          <p>Стаж: {{ coach.experience_years}}</p>
+          <p>Возраст : {{ coach.user.age}}</p>
+      </li>
+      <h2>Отзывы</h2>
+
+  {% for comment in comments %}
+    <li class="list-group-item">
+        <h5>Автор:{{ comment.author.first_name }}</h5>
+        <p>Рейтинг: {{ comment.raiting}}</p>
+        <p>Комментарий: {{ comment.text }}</p>
+        <p>Дата: {{ comment.created_at }}</p>
+      </li>
+
+  {% endfor %}
+      <h2>Доступные слоты для записи</h2>
+
+{% if available_slots %}
+
+        {% for slot in available_slots %}
+            <li>
+                {{ slot.start_time }} - {{ slot.end_time }}
+                <a href="{% url 'book_training' slot_id=slot.id %}">Записаться</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>У этого тренера пока нет доступных слотов.</p>
+
+{% endif %}
+{% if not user.is_coach%}
+      <a href="{% url 'add_comment' coach.user.id %}" class="btn btn-warning">Добавить отзыв</a>
+{% endif %}
+  <a href="{% url 'start_chat' coach_id=coach.user.id %}" class="btn btn-primary">Написать тренеру</a>  <!-- Добавлена ссылка -->
+{% endblock %}

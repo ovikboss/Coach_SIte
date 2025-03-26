@@ -1,0 +1,16 @@
+.logout-button {
+    border: none;
+    background: none;
+    padding: 0;
+    color: rgba(255, 255, 255, .55);
+    text-decoration: none; /* Убирает подчеркивание по умолчанию */
+}
+
+.logout-button:hover {
+    color: rgba(255, 255, 255, .75); /* Изменяем цвет при наведении */
+    text-decoration: none; /* Убираем подчеркивание при наведении */
+}
+
+.nav-link:hover {
+    color: rgba(255, 255, 255, .75); /* Чтобы соответствовать hover эффекту у обычных ссылок */
+}

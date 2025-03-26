@@ -1,0 +1,28 @@
+{% extends 'Coach_Site/base.html' %}
+
+{% block content %}
+    <h1>Расписание тренера</h1>
+
+    <h2>Доступные слоты</h2>
+    <ul>
+        {% for slot in slots %}
+            <li>{{ slot.start_time }} - {{ slot.end_time }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Тренировки</h2>
+    <ul>
+        {% for session in training_sessions %}
+            {% if session.status == 'confirmed' %}
+            <li>{{ session.slot.start_time }} - {{ session.slot.end_time }} - {{ session.user.username }}</li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+
+    <h2>Добавить доступный слот</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Добавить</button>
+    </form>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'Coach_Site/base.html' %}
+
+{% block title %} Главная {% endblock %}
+
+{% block content %}
+  <p>Это главная страница нашего сайта. Здесь вы можете найти удобного вам тренера.</p>
+  <h1>Список тренеров</h1>
+  <ul class="list-group">
+      {% for coach in coachs %}
+      <li class="list-group-item">
+        <h5>{{ coach.user.first_name }}</h5>
+        <p> Номер телефона:
+          {% if  coach.hide_phone_number %}
+            Номер скрыт
+          {% else %}
+          {{ coach.user.phone_number|truncatewords:7}}</p>
+        {% endif %}
+        <p>Рейтинг: {{ coach.rating}}</p>
+        <a href="{% url 'coach_detail' coach.user.id %}" class="btn btn-warning">Отзывы</a>
+
+      </li>
+    {% empty %}
+      <p>Тренера не найдены.</p>
+    {% endfor %}
+  </ul>
+{% endblock %}

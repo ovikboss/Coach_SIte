@@ -1,0 +1,14 @@
+{% extends 'Coach_Site/base.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+  <h1>{{ title }}</h1>
+
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Зарегистрироваться</button>
+    <a href="{% url 'my_profile' %}">Отмена</a>
+  </form>
+{% endblock %}

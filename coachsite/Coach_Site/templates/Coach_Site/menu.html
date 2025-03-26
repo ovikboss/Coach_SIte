@@ -1,0 +1,50 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% if request.user.is_authenticated %}{% url 'my_profile' %}{% else %}#{% endif %}">Моя страница</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Главная</a>
+                </li>
+
+                {% if request.user.is_authenticated %}
+                {% if not request.user.coach %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'user_schedule' %}">Мои тренировки</a>
+                    </li>
+                {% endif %}
+                    {% if request.user.coach %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'coach_schedule' %}">Мой график</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'coach_training_requests' %}">Запросы на тренировки</a>
+                        </li>
+                    {% endif %}
+
+                    <li class="nav-item">
+                        <form method="post" action="{% url 'logout' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="nav-link logout-button">Выйти</button>
+                        </form>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Войти</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'register' %}">Регистрация</a>
+                    </li>
+                {% endif %}
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'chat_list' %}">Чаты</a>
+                </li>
+                <!-- Другие пункты меню -->
+            </ul>
+        </div>
+    </div>
+</nav>

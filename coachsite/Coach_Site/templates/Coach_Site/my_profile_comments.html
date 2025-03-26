@@ -1,0 +1,19 @@
+{% extends 'Coach_Site/base.html' %}
+
+{% block title %} Отзывы {{ user.first_name }} {% endblock %}
+
+{% block content %}
+  <ul class="list-group">
+  {% for comment in comments %}
+      <li class="list-group-item">
+        <h5>Автор:{{ comment.author.first_name }}</h5>
+
+        <p>Рейтинг: {{ comment.raiting}}</p>
+        <p>Комментарий: {{ comment.text }}</p>
+        <p>Дата: {{ comment.created_at }}</p>
+        <a href="{% url 'edit_comment' comment_id=comment.pk %}" class="btn btn-warning">Редактировать</a>
+      </li>
+  {% endfor %}
+
+  </ul>
+{% endblock %}

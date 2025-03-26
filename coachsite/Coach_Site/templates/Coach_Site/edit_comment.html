@@ -1,0 +1,16 @@
+{% extends 'Coach_Site/base.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+    <h1>{{ title }}</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-primary" type="submit">Сохранить изменения</button>
+        <a class="btn btn-primary" href="{% url 'coach_detail' coach_id=comment.coach.pk %}">Отмена</a>
+    </form>
+
+    <p>Автор: {{ comment.author.username }}</p>  <!-- Отображаем автора -->
+{% endblock %}

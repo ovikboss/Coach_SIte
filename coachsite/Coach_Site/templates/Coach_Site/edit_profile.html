@@ -1,0 +1,22 @@
+{% extends 'Coach_Site/base.html' %}
+
+{% block title %}Редактирование профиля{% endblock %}
+
+{% block content %}
+  <h1>Редактирование профиля</h1>
+
+  <form method="post">
+    {% csrf_token %}
+
+    <h2>Информация о пользователе</h2>
+    {{ user_form.as_p }}
+
+    {% if coach_form %}
+      <h2>Информация о тренере</h2>
+      {{ coach_form.as_p }}
+    {% endif %}
+
+    <button class="btn btn-primary" type="submit">Сохранить изменения</button>
+    <a class="btn btn-primary" href="{% url 'my_profile' %}">Отмена</a>
+  </form>
+{% endblock %}

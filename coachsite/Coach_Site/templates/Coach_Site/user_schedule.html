@@ -1,0 +1,20 @@
+{% extends 'Coach_Site/base.html' %}
+
+{% block title %}Ваши тренировки{% endblock %}
+
+{% block content %}
+    <h1>Ваши тренировки</h1>
+
+    {% if sessions %}
+        <ul>
+            {% for session in sessions %}
+                <li>
+                    {{ session.slot.start_time }} - {{ session.slot.end_time }} с тренером
+                    {{ session.coach.user.username }} (Статус: {{ session.get_status_display }})
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>У вас пока нет запланированных тренировок.</p>
+    {% endif %}
+{% endblock %}

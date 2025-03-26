@@ -1,0 +1,29 @@
+{% extends 'Coach_Site/base.html' %}
+
+{% block title %} Мой профиль {% endblock %}
+
+{% block content %}
+  <div class="list-group">
+      {% if user.user.is_coach %}  <!-- Проверяем, есть ли профиль тренера -->
+        <h1>Добро пожаловать, тренер! {{ user.user.username }}</h1>
+        <p>Номер телефона: {{ user.user.phone_number }}</p>
+        <p>Возраст: {{ user.user.age }}</p>
+        <p>Биография: <br>{{ user.user.coach_profile.bio }}</p> <!-- Используем coach_profile -->
+        <p>Стаж (лет): {{ user.experience_years }}</p>
+        <p>Рейтинг: {{ user.rating }}</p>
+        <a href="{% url 'edit_profile' %}" class="btn btn-warning">Редактировать профиль</a>
+        <a href="{% url 'coach_detail' user.user.id %}" class="btn btn-warning">Посмотреть отзывы</a>
+
+      {% else %}
+        <h1>Добро пожаловать, пользователь! {{ user.username }}</h1>
+        <p>Номер телефона: {{ user.phone_number }}</p>
+        <p>Возраст: {{ user.age }}</p>
+        <p>Рост: {{ user.height }}</p>
+        <p>Вес: {{ user.weight }}</p>
+        <a href="{% url 'edit_profile' %}" class="btn btn-warning">Редактировать профиль</a>
+        <a href="{% url 'user_comments' %}" class="btn btn-warning">Посмотреть отзывы</a>
+        <a href="{% url 'register_as_coach' %}" class="btn btn-warning">Зарегистрироваться как тренер</a>
+      {% endif %}
+
+  </div>
+{% endblock %}

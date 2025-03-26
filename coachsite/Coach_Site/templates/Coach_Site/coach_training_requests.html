@@ -1,0 +1,23 @@
+{% extends 'Coach_Site/base.html' %}
+
+{% block title %}Запросы на тренировки{% endblock %}
+
+{% block content %}
+    <h1>Запросы на тренировки</h1>
+
+    {% if training_requests %}
+        <ul>
+            {% for request in training_requests %}
+                <li>
+                    {{ request.slot.start_time }} - {{ request.slot.end_time }} с пользователем
+                    {{ request.user.username }}
+
+                    <a href="{% url 'confirm_training' session_id=request.id %}">Подтвердить</a>
+                    <a href="{% url 'reject_training' session_id=request.id %}">Отклонить</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>У вас нет запросов на тренировки.</p>
+    {% endif %}
+{% endblock %}

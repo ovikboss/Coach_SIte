@@ -1,0 +1,67 @@
+{% extends 'Coach_Site/base.html' %}
+
+{% block title %}Чат с {{ opponent_name }}{% endblock %}
+
+{% block content %}
+    <h1>Чат с {{ opponent_name }}</h1>
+
+    <div class = "" id="messages">
+        <!-- Здесь будут отображаться сообщения -->
+    </div>
+
+    <form class="" id="message-form">
+        {% csrf_token %}
+        <textarea id="message-input" rows="3"></textarea>
+        <button type="submit">Отправить</button>
+    </form>
+{% endblock %}
+
+{% block script %}
+    <script>
+        const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+        const chatSocket = new WebSocket(`${protocol}//${window.location.host}/ws/chat/{{ chat.id }}/`);
+        const opponentName = "{{ opponent_name }}"; // Получаем имя собеседника из шаблона
+        const userType = "{{ user_type }}";
+        chatSocket.onmessage = function (e) {
+            const data = JSON.parse(e.data);
+            const message = data['message'];
+            const user = data['user'];
+            const timestamp = data['timestamp'];
+            const messageElement = document.createElement('p');
+            messageElement.innerHTML = `<strong>${user}:</strong> ${message} <small>(${timestamp})</small>`;
+            document.querySelector('#messages').appendChild(messageElement);
+        };
+
+        chatSocket.onopen = function(e) {
+            console.log("WebSocket connection established");
+            // Запрос истории сообщений при подключении
+            chatSocket.send(JSON.stringify({
+                'type': 'get_history'
+            }));
+        };
+
+        chatSocket.onclose = function (e) {
+            console.error('Chat socket closed unexpectedly');
+        };
+
+        chatSocket.onerror = function(error) {
+            console.error('WebSocket error:', error);
+        };
+
+        document.querySelector('#message-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const messageInput = document.querySelector('#message-input');
+            const message = messageInput.value;
+
+            if (chatSocket.readyState === WebSocket.OPEN) {
+                chatSocket.send(JSON.stringify({
+                    'message': message
+                }));
+                messageInput.value = '';
+            } else {
+                console.log('WebSocket connection is not open.');
+            }
+        });
+    </script>
+{% endblock %}
