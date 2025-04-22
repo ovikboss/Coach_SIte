@@ -25,7 +25,12 @@ SECRET_KEY = "django-insecure-w7ts(9nnjza(92zru@zzwfphymlm(w4^3!z_++f$vx9i%+f8q^
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['my-site-ovik.cloudpub.ru', 'www.my-site-ovik.cloudpub.ru', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = [
+    "my-site-ovik.cloudpub.ru",
+    "www.my-site-ovik.cloudpub.ru",
+    "127.0.0.1",
+    "localhost",
+]
 
 
 # Application definition
@@ -39,7 +44,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "Coach_Site",
     "Users_Site",
-    'channels',
+    "channels",
 ]
 
 MIDDLEWARE = [
@@ -50,7 +55,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "django.contrib.messages.middleware.MessageMiddleware"
+    "django.contrib.messages.middleware.MessageMiddleware",
 ]
 
 ROOT_URLCONF = "coachsite.urls"
@@ -72,28 +77,28 @@ TEMPLATES = [
 ]
 
 # WSGI_APPLICATION = "coachsite.wsgi.application"
-ASGI_APPLICATION = 'coachsite.asgi.application'
+ASGI_APPLICATION = "coachsite.asgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',  # Или 'mysql', 'sqlite3', ...
-        'NAME': "mywebsite",  # Имя вашей базы данных
-        'USER': 'postgres',       # Имя пользователя базы данных
-        'PASSWORD': 'password',  # Пароль пользователя базы данных
-        'HOST': '127.0.0.1',    # Хост базы данных
-        'PORT': '5432',        # Порт базы данных
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",  # Или 'mysql', 'sqlite3', ...
+        "NAME": "mywebsite",  # Имя вашей базы данных
+        "USER": "postgres",  # Имя пользователя базы данных
+        "PASSWORD": "password",  # Пароль пользователя базы данных
+        "HOST": "db",  # Хост базы данных
+        "PORT": "5432",  # Порт базы данных
     }
 }
 
-AUTH_USER_MODEL = 'Users_Site.User'
+AUTH_USER_MODEL = "Users_Site.User"
 # Application definition
 
-LOGIN_REDIRECT_URL = '/my_profile/'
+LOGIN_REDIRECT_URL = "/my_profile/"
 
-LOGOUT_REDIRECT_URL = '/home/'
+LOGOUT_REDIRECT_URL = "/home/"
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -116,7 +121,7 @@ CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [("127.0.0.1", 6379)], # Или ваш адрес Redis
+            "hosts": [("redis", 6379)],  # Или ваш адрес Redis
         },
     },
 }
@@ -143,4 +148,4 @@ STATIC_URL = "/static/"
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-CSRF_TRUSTED_ORIGINS = ['https://my-site-ovik.cloudpub.ru']
+CSRF_TRUSTED_ORIGINS = ["https://my-site-ovik.cloudpub.ru"]

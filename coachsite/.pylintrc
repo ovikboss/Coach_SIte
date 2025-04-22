@@ -1,0 +1,9 @@
+[MASTER]
+disable=
+    C0114, # module
+    C0116, #  function
+    C0115, #classes
+    C0301, #Line too long
+    E1101, # has no 'objects' member (no-member)
+    W0611, #Unused MessageForm imported from forms (unused-import)
+ignore=migrations

@@ -1,0 +1,31 @@
+  services:
+    db:
+      image: postgres:latest
+      restart: always
+      environment:
+        POSTGRES_USER: "postgres"
+        POSTGRES_PASSWORD: "password"
+        POSTGRES_DB: "mywebsite"
+      volumes:
+        - db_data:/var/lib/postgresql/data # Persist data
+    web:
+      build: .
+      command: uvicorn coachsite.asgi:application --host 0.0.0.0 --port 8000
+      ports:
+        - "8000:8000"
+      environment:
+        DJANGO_SETTINGS_MODULE: coachsite.settings
+        POSTGRES_USER: "postgres" # <-- Добавлено
+        POSTGRES_PASSWORD: "password" # <-- Добавлено
+        POSTGRES_DB: "mywebsite" # <-- Добавлено
+      depends_on:
+        - db
+    redis: # Добавляем сервис Redis
+      image: "redis:latest" # Используем официальный образ Redis
+      ports:
+        - "6379:6379" # Публикуем порт 6379 (стандартный для Redis)
+      volumes:
+        - redis_data:/data # Создаем том для хранения данных Red
+  volumes:
+    db_data:
+    redis_data:
